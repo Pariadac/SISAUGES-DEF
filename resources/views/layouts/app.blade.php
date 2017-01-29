@@ -1,87 +1,179 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html class="fixed sidebar-left-collapsed">
+    <head>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- Basic -->
+        <meta charset="UTF-8">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>SISAUGES-MEB</title>
+        <meta name="keywords" content="HTML5 Admin Template" />
+        <meta name="description" content="Porto Admin - Responsive HTML5 Template">
+        <meta name="author" content="okler.net">
+        <link rel="shortcut icon" href="{{url('assets/ico/favicon.png')}}">
 
-    <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+        <!-- Mobile Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <!-- Scripts -->
-    <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+        <!-- Web Fonts  -->
+        
+        <!-- Vendor CSS -->
+        <link rel="stylesheet" href="{{url('assets/vendor/bootstrap/css/bootstrap.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/font-awesome/css/font-awesome.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/magnific-popup/magnific-popup.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/bootstrap-datepicker/css/datepicker3.css')}}" />
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+        <!-- Specific Page Vendor CSS -->
+        <link rel="stylesheet" href="{{url('assets/vendor/select2/select2.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/vendor/jquery-datatables-bs3/assets/css/datatables.css')}}" />
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
+        <!-- Theme CSS -->
+        <link rel="stylesheet" href="{{url('assets/stylesheets/theme.css')}}" />
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+        <!-- Skin CSS -->
+        <link rel="stylesheet" href="{{url('assets/stylesheets/skins/default.css')}}" />
+        <link rel="stylesheet" href="{{url('assets/stylesheets/sisauges-meb-styles.css')}}" />
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+        <!-- Theme Custom CSS -->
+        <link rel="stylesheet" href="{{url('assets/stylesheets/theme-custom.css')}}">
 
-                                <ul class="dropdown-menu" role="menu">
+        <!-- Head Libs -->
+        <script src="{{ url('assets/vendor/modernizr/modernizr.js')}}"></script>
+
+    </head>
+    <body>
+        <section class="body">
+
+            <!-- start: header -->
+            <header class="header">
+
+                <div class="princpl-bnr"></div>
+
+            </header>
+            <!-- end: header -->
+
+            <div class="inner-wrapper">
+                <!-- start: sidebar -->
+                
+                    @include('layouts.sidebar')
+
+                <!-- end: sidebar -->
+
+                <section role="main" class="content-body">
+                    <header class="page-header">
+                        <h2>Principal</h2>
+                    
+                        <div class="right-wrapper pull-right">
+                            <ol class="breadcrumbs">
+                                <li>
+                                    <a href="{{url('index.html')}}">
+                                        <i class="fa fa-home"></i>
+                                    </a>
+                                </li>
+                            </ol>
+                    
+                            <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+                        </div>
+                    </header>
+
+                    <!-- start: page -->
+
+                        @yield('content')
+
+                    <!-- end: page -->
+                </section>
+            </div>
+
+            <aside id="sidebar-right" class="sidebar-right">
+                <div class="nano">
+                    <div class="nano-content">
+                        <a href="#" class="mobile-close visible-xs">
+                            Collapse <i class="fa fa-chevron-right"></i>
+                        </a>
+            
+                        <div class="sidebar-right-wrapper">
+            
+                            <div class="sidebar-widget widget-calendar">
+                                <h6>Upcoming Tasks</h6>
+                                <div data-plugin-datepicker data-plugin-skin="dark" ></div>
+            
+                                <ul>
                                     <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
+                                        <time datetime="2014-04-19T00:00+00:00">04/19/2014</time>
+                                        <span>Company Meeting</span>
                                     </li>
                                 </ul>
-                            </li>
-                        @endif
-                    </ul>
+                            </div>
+            
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </aside>
 
-        @yield('content')
-    </div>
+            <!-- Vendor -->
+            <script src="{{ url('assets/vendor/jquery/jquery.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js')}}"></script>
+            <script src="{{ url('assets/vendor/bootstrap/js/bootstrap.js')}}"></script>
+            <script src="{{ url('assets/vendor/nanoscroller/nanoscroller.js')}}"></script>
+            <script src="{{ url('assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+            <script src="{{ url('assets/vendor/magnific-popup/magnific-popup.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-placeholder/jquery.placeholder.js')}}"></script>
+            
+            <!-- Specific Page Vendor -->
 
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
-</body>
+            <script src="{{ url('assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-appear/jquery.appear.js')}}"></script>
+            <script src="{{ url('assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-easypiechart/jquery.easypiechart.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot-tooltip/jquery.flot.tooltip.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.pie.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.categories.js')}}"></script>
+            <script src="{{ url('assets/vendor/flot/jquery.flot.resize.js')}}"></script>
+            <script src="{{ url('assets/vendor/jquery-sparkline/jquery.sparkline.js')}}"></script>
+            <script src="{{ url('assets/vendor/raphael/raphael.js')}}"></script>
+            <script src="{{ url('assets/vendor/morris/morris.js')}}"></script>
+            <script src="{{ url('assets/vendor/gauge/gauge.js')}}"></script>
+            <script src="{{ url('assets/vendor/snap-svg/snap.svg.js')}}"></script>
+            <script src="{{ url('assets/vendor/liquid-meter/liquid.meter.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/jquery.vmap.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/data/jquery.vmap.sampledata.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/jquery.vmap.world.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.africa.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.asia.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.australia.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.europe.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.north-america.js')}}"></script>
+            <script src="{{ url('assets/vendor/jqvmap/maps/continents/jquery.vmap.south-america.js')}}"></script>
+            <script src="{{url('assets/vendor/pnotify/pnotify.custom.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables-bs3/assets/js/datatables.js' )}}"></script>
+            <script src="{{url('assets/vendor/select2/select2.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables/media/js/jquery.dataTables.js' )}}"></script>
+            <script src="{{url('assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js' )}}"></script>
+            <script type="text/javascript" src="{{url('assets/js/main_sisauges_meb.js' )}}"></script>
+
+            
+            <!-- Theme Base, Components and Settings -->
+            <script src="{{ url('assets/javascripts/theme.js')}}"></script>
+            
+            <!-- Theme Custom -->
+            <script src="{{ url('assets/javascripts/theme.custom.js')}}"></script>
+            
+            <!-- Theme Initialization Files -->
+            <script src="{{ url('assets/javascripts/theme.init.js')}}"></script>
+
+            <!-- Examples -->
+            <script src="{{url('assets/javascripts/tables/examples.datatables.ajax.js' )}}"></script>
+            <script src="{{ url('assets/javascripts/dashboard/examples.dashboard.js')}}"></script>
+            <script src="{{url('assets/javascripts/ui-elements/examples.modals.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.editable.js' )}}"></script>
+            <script src="{{url('assets/javascripts/ui-elements/examples.modals.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.default.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.row.with.details.js' )}}"></script>
+            <script src="{{url('assets/javascripts/tables/examples.datatables.tabletools.js' )}}"></script>
+            @stack('scripts')
+
+        </section>
+    </body>
 </html>

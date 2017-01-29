@@ -1,95 +1,210 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
+        <div class="row">
+            <div class="col-md-6 col-lg-12 col-xl-6">
+                <section class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="chart-data-selector" id="salesSelectorWrapper">
+                                    <h2>
+                                        Proyectos:
+                                        <strong>
+                                            <select class="form-control" id="salesSelector">
+                                                <option value="Porto Admin" selected>2014</option>
+                                                <option value="Porto Drupal" >2015</option>
+                                                <option value="Porto Wordpress" >2016</option>
+                                            </select>
+                                        </strong>
+                                    </h2>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+                                    <div id="salesSelectorItems" class="chart-data-selector-items mt-sm">
+                                        <!-- Flot: Sales Porto Admin -->
+                                        <div class="chart chart-sm" data-sales-rel="Porto Admin" id="flotDashSales1" class="chart-active"></div>
+                                        <script>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+                                            var flotDashSales1Data = [{
+                                                data: [
+                                                    ["Jan", 5],
+                                                    ["Feb", 10],
+                                                    ["Mar", 2],
+                                                    ["Apr", 3],
+                                                    ["May", 8],
+                                                    ["Jun", 15],
+                                                    ["Jul", 1],
+                                                    ["Aug", 7],
+                                                    ["Sep", 10],
+                                                    ["Oct", 11],
+                                                    ["Nov", 20],
+                                                    ["Dic", 17]
+                                                ],
+                                                color: "#0088cc"
+                                            }];
 
-            .full-height {
-                height: 100vh;
-            }
+                                            // See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+                                        </script>
 
-            .position-ref {
-                position: relative;
-            }
+                                        <!-- Flot: Sales Porto Drupal -->
+                                        <div class="chart chart-sm" data-sales-rel="Porto Drupal" id="flotDashSales2" class="chart-hidden"></div>
+                                        <script>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+                                            var flotDashSales2Data = [{
+                                                data: [
+                                                    ["Jan", 2],
+                                                    ["Feb", 2],
+                                                    ["Mar", 0],
+                                                    ["Apr", 7],
+                                                    ["May", 8],
+                                                    ["Jun", 12],
+                                                    ["Jul", 15],
+                                                    ["Aug", 10],
+                                                    ["Sep", 7],
+                                                    ["Oct", 0],
+                                                    ["Nov", 0],
+                                                    ["Dic", 5]
+                                                ],
+                                                color: "#0088cc"
+                                            }];
 
-            .content {
-                text-align: center;
-            }
+                                            // See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
 
-            .title {
-                font-size: 84px;
-            }
+                                        </script>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+                                        <!-- Flot: Sales Porto Wordpress -->
+                                        <div class="chart chart-sm" data-sales-rel="Porto Wordpress" id="flotDashSales3" class="chart-hidden"></div>
+                                        <script>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
+                                            var flotDashSales3Data = [{
+                                                data: [
+                                                    ["Jan", 1],
+                                                    ["Feb", 10],
+                                                    ["Mar", 20],
+                                                    ["Apr", 20],
+                                                    ["May", 12],
+                                                    ["Jun", 5],
+                                                    ["Jul", 0],
+                                                    ["Aug", 3],
+                                                    ["Sep", 7],
+                                                    ["Oct", 2],
+                                                    ["Nov", 5],
+                                                    ["Dic", 10]
+                                                ],
+                                                color: "#0088cc"
+                                            }];
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                                            // See: assets/javascripts/dashboard/examples.dashboard.js for more settings.
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                                        </script>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-6 col-lg-12 col-xl-6">
+                <div class="row">
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <section class="panel panel-featured-left panel-featured-primary">
+                            <div class="panel-body">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon bg-primary">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </div>
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Muestras Totales</h4>
+                                            <div class="info">
+                                                <strong class="amount">1281</strong>
+                                            </div>
+                                        </div>
+                                        <div class="summary-footer">
+                                            <a class="text-muted text-uppercase">(ver todas)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <section class="panel panel-featured-left panel-featured-secondary">
+                            <div class="panel-body">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon bg-secondary">
+                                            <i class="fa fa-university"></i>
+                                        </div>
+                                    </div>
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Instituciones Afiliadas</h4>
+                                            <div class="info">
+                                                <strong class="amount">200</strong>
+                                            </div>
+                                        </div>
+                                        <div class="summary-footer">
+                                            <a class="text-muted text-uppercase">(ver)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <section class="panel panel-featured-left panel-featured-tertiary">
+                            <div class="panel-body">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon bg-tertiary">
+                                            <i class="fa fa-cube"></i>
+                                        </div>
+                                    </div>
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Proyectos Solicitados este Mes:</h4>
+                                            <div class="info">
+                                                <strong class="amount">18</strong>
+                                                <span class="text-primary">(10 pendientes)</span>
+                                            </div>
+                                        </div>
+                                        <div class="summary-footer">
+                                            <a class="text-muted text-uppercase">(ver todos)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-md-12 col-lg-6 col-xl-6">
+                        <section class="panel panel-featured-left panel-featured-quartenary">
+                            <div class="panel-body">
+                                <div class="widget-summary">
+                                    <div class="widget-summary-col widget-summary-col-icon">
+                                        <div class="summary-icon bg-quartenary">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="widget-summary-col">
+                                        <div class="summary">
+                                            <h4 class="title">Usuarios Registrados</h4>
+                                            <div class="info">
+                                                <strong class="amount">20</strong>
+                                            </div>
+                                        </div>
+                                        <div class="summary-footer">
+                                            <a class="text-muted text-uppercase">(ver)</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+@endsection
