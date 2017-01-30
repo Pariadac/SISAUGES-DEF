@@ -37,23 +37,31 @@ jQuery(document).ready(function() {
             var aux = inp.val().toString();
 
             if (aux.match(/[^A-Za-z]/g)) {
-                aux=aux.replace(/[^A-Za-z]/g, '')
+                inp.val(aux.replace(/[^A-Za-z]/g, ''));
             };
 
-            return aux;
+            return inp;
 
         };
 
         /*Campos con Limites de Tamaño*/
 
 
-        function validarLimite(inp,max){
+        function validarLimites(inp,vars){
 
-            if (inp.val().length>max) {
-                inp.val(inp.val().substr(0,max));
+            var lim= vars.split(',');
+
+            var retorno=0;
+
+            if (inp.val().length>lim[1]) {
+                retorno=1;
             }
 
-            return inp;
+            if (inp.val().length>lim[0]) {
+                retorno=1;
+            }
+
+            return retorno;
 
         }
 
@@ -76,11 +84,61 @@ jQuery(document).ready(function() {
     
     function validacionGeneral(form){
 
+        var retorno=[];
+        var pos=0;
+
         $(form+" .form-control").each(function(){
 
-                console.log($(this));
+            var error=0;
+
+            if ($(this).data('solonumero')) {
+                
+                if (validarNumeros($(this)).val().length==0) {
+                    error++;
+                    
+                }
+
+            }
+
+            if ($(this).data('solocaracteres')) {
+                
+                if (validarCaracteres($(this)).val().length==0) {
+                    error++;
+                }
+
+            }
+
+            if ($(this).data('solocorreo')) {
+                
+                if (validarEmail($(this)).val().length==0) {
+                    error++;
+                }
+
+            }
+
+            if ($(this).data('limites')) {
+                
+                if (validarLimites($(this),$(this).data('limites'))!=0) {
+                    error++;
+                }
+
+            }
+
+
+            if ($(this).data('obligatorio') || $(this).val().length>1) {
+                
+                if (error>0) {
+                    retorno[pos]=$(this);
+                }
+
+            }
+
+            pos++;
+
 
         });
+
+        return retorno;
 
     }    
 
@@ -168,13 +226,17 @@ jQuery(document).ready(function() {
 
         event.preventDefault();
 
+        $('#modalForm').removeClass('modal-block-danger modal-block-warning modal-block-success  modal-block-primary');
+
         var form=$('#modalmicroform');
 
-        validacionGeneral('#modalmicroform');
+        var validacion=validacionGeneral('#modalmicroform');
 
-        //
+        console.log(validacion);
 
-            /*var promise=$.ajax({
+        if (validacion.length==0) {
+
+            var promise=$.ajax({
 
                 url:form.attr('action'),
                 cache: false,
@@ -187,9 +249,6 @@ jQuery(document).ready(function() {
                 	});
                 },
                 success:    function(data){
-
-
-                	$('#modalForm').removeClass('modal-block-danger modal-block-warning modal-block-success  modal-block-primary');
 
                 	if (data.resultado=='success') {
 
@@ -250,9 +309,21 @@ jQuery(document).ready(function() {
 
                 }
 
-            });*/
+            });
 
-        //    
+        }else{
+            $('#modalForm').addClass('modal-block-danger');
+
+            $('#result-mdl > div > div > div.modal-icon > i').attr('class','fa fa-times-circle');
+            $('.msn-alerta-header').text('Ocurrio un error!');
+            $('.msn-alerta-body').text('La solicitud no se pudo completar, recargue la pagina he intente mas tarde...');
+
+            $('#mld-dismiss-fin').attr('class','btn btn-danger regresar');
+
+            $('#mdl-truebody').slideUp('fast','swing',function(){
+                $('#result-mdl').slideDown('fast','swing');
+            });
+        }  
 
         //Table data update
 

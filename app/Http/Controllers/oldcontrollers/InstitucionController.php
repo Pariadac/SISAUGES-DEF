@@ -1,15 +1,63 @@
 <?php
-
-namespace App\Http\Controllers;
+/**
+ * Copyright (c) 2016 Ely Colmenarez
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+namespace SISAUGES\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use SISAUGES\Http\Requests;
+use SISAUGES\Http\Controllers\Controller;
+use SISAUGES\Institucion;
+use SISAUGES\Representante;
+
+use Illuminate\Support\Facades\View;
+/**
+ * Class UserController
+ *
+ * Esta clase se diseño para manejar las transancciones de la institución en la base de
+ * datos, estas pueden ser agregar,
+ * modificar, eliminar o listar.
+ *
+ * @author Ely Colmenarez ElyJColmenarez@Gmail.com
+ * @copyright 2016 Ely Colmenarez
+ * @package SISAUGES\Http\Controllers
+ */
 class InstitucionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
-     * Display a listing of the resource.
+     * Metodo diseñado para direccionar a la pantalla principal del modulo
      *
-     * @return \Illuminate\Http\Response
+     * Este metodo redirige a la pantalla principal del modulo institución
+     * esta pantalla mostrara un listado de la institución agregada y un boton para modificar
+     * y eliminar
+     *
+     * @param void
+     *
+     * @return $institución devuelve objeto de tipo institución
      */
     public function index()
     {
@@ -20,7 +68,8 @@ class InstitucionController extends Controller
         
     }
 
-    public function renderForm(Request $request){
+
+    public function renderform(Request $request){
 
         if ($request->typeform=='add') {
             $action="institucion/crear";
@@ -72,14 +121,6 @@ class InstitucionController extends Controller
                     'type'      => 'select',
                     'value'     => (empty($institucion))? '' : $institucion->status,
                     'id'        => 'status',
-                    'validaciones'=>array(
-
-                        'solonumero',
-                        'solocaracteres',
-                        'solocorreo',
-                        'obligatorio'
-
-                    ),
                     'label'     => 'Status',
                     'options'   => array(
                         'Seleccione...',
@@ -108,15 +149,8 @@ class InstitucionController extends Controller
         echo json_encode($retorno);
 
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    public function store($request){
+    
+    public function crear(Request $request){
 
         $institucion=new Institucion($request->all());
 
@@ -139,19 +173,26 @@ class InstitucionController extends Controller
             $val=$institucion->save();
         }
 
-        return $val;
+        $retorno=array();
+
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
+
+        }else{
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos';
+
+        }
+
+        echo json_encode($retorno);
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
-    public function update($request, $id){
+    public function modificar(Request $request, $id){
 
         $institucion=Institucion::find($id);
 
@@ -182,40 +223,31 @@ class InstitucionController extends Controller
             $val=$institucion->save();
         }
 
-        return $val;
+        $retorno=array();
+
+        if ($val) {
+            //Datos Validos
+            $retorno['resultado']='success';
+            $retorno['mensaje']='El registro de los datos fue exitoso...';
+
+        }else{
+            //Datos Invalidos
+            $retorno['resultado']='danger';
+            $retorno['mensaje']='Los datos no suministrados no son validos';
+
+        }
+
+        echo json_encode($retorno);
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
-    public function destroy(Request $request, $id){
+    public function eliminar(Request $request, $id){
 
         $institucion=Institucion::find($id);
 
         $val=$institucion->delete();
 
-        return $val;
-
-    }
-
-
-
-    public function search(Request $request){
-
-        
-
-    }
-
-
-    public function ajaxRegularStore(Request $request){
-
-        $val=$this->store($request);
-
         $retorno=array();
 
         if ($val) {
@@ -234,52 +266,12 @@ class InstitucionController extends Controller
 
     }
 
-    public function ajaxRegularUpdate(Request $request, $id){
 
-        $val=$this->update($request,$id);
+    public function buscar(Request $request){
 
-        $retorno=array();
-
-        if ($val) {
-            //Datos Validos
-            $retorno['resultado']='success';
-            $retorno['mensaje']='El registro de los datos fue exitoso...';
-
-        }else{
-            //Datos Invalidos
-            $retorno['resultado']='danger';
-            $retorno['mensaje']='Los datos no suministrados no son validos';
-
-        }
+        $retorno=array('data'=>Institucion::orderBy('nombre_institucion', 'desc'));
 
         echo json_encode($retorno);
-
-    }
-
-    public function ajaxRegularDestroy(Request $request){
-
-        $val=$this->destroy($request);
-
-        $retorno=array();
-
-        if ($val) {
-            //Datos Validos
-            $retorno['resultado']='success';
-            $retorno['mensaje']='El registro de los datos fue exitoso...';
-
-        }else{
-            //Datos Invalidos
-            $retorno['resultado']='danger';
-            $retorno['mensaje']='Los datos no suministrados no son validos';
-
-        }
-
-        echo json_encode($retorno);
-
-    }
-
-    public function ajaxRegularSearch(Request $request){
-
 
     }
 
