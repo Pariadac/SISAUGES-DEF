@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace SISAUGES\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use SISAUGES\Http\Requests;
 
 class RolUsuarioController extends Controller
 {
